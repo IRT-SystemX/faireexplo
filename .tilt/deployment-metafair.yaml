@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fair-metafair
+  namespace: fair
+  labels:
+    app.kubernetes.io/name: fair-metafair-deployment
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fair-metafair-pod
+      
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: fair-metafair-pod
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: shared-data
+          emptyDir: {}
+      containers:
+        - name: metafair
+          image: metafair-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 25333
+          volumeMounts:
+            - name: shared-data
+              mountPath: /app/src/resources/downloaded_ontologies/
+        - name: fileserver
+          image: nginx:1.15
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: shared-data
+              mountPath: /usr/share/nginx/html/downloaded_ontologies/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fair-metafair-service
+  namespace: fair
+spec:
+  selector:
+    app.kubernetes.io/name: fair-metafair-pod
+  type: ClusterIP
+  ports:
+    - name: port80
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: port25333
+      protocol: TCP
+      port: 25333
+      targetPort: 25333

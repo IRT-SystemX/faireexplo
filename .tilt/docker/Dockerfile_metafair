@@ -1,0 +1,125 @@
+FROM maven:3.8.1-openjdk-11 as mvn_builder
+
+RUN git clone https://github.com/arsarkar/meta-fair
+
+RUN echo '\n\
+<?xml version="1.0" encoding="UTF-8"?>\n\
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"\n\
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">\n\
+	<modelVersion>4.0.0</modelVersion>\n\
+	<groupId>fr.enit.pics</groupId>\n\
+	<artifactId>metafair</artifactId>\n\
+	<packaging>jar</packaging>\n\
+	<name>metafair</name>\n\
+	<version>1.0-SNAPSHOT</version>\n\
+	<properties>\n\
+		<project.main.class>fr.enit.pics.App</project.main.class>\n\
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n\
+		<maven.compiler.source>1.8</maven.compiler.source>\n\
+		<maven.compiler.target>1.8</maven.compiler.target>\n\
+		<maven-plugin-version>1.0.0</maven-plugin-version>\n\
+		<junit-version>4.12</junit-version>\n\
+	</properties>\n\
+	<dependencies>\n\
+    <dependency>\n\
+      <groupId>net.sourceforge.owlapi</groupId>\n\
+      <artifactId>owlapi-distribution</artifactId>\n\
+      <version>5.5.0</version>\n\
+    </dependency>\n\
+    <dependency>\n\
+      <groupId>net.sf.py4j</groupId>\n\
+      <artifactId>py4j</artifactId>\n\
+      <version>0.10.9.7</version>\n\
+    </dependency>\n\
+	</dependencies>\n\
+	<build>\n\
+		<sourceDirectory>src/main/java</sourceDirectory>\n\
+		<plugins>\n\
+			<plugin>\n\
+				<groupId>org.apache.maven.plugins</groupId>\n\
+				<artifactId>maven-compiler-plugin</artifactId>\n\
+				<version>2.5.1</version>\n\
+				<configuration>\n\
+					<source>${maven.compiler.source}</source>\n\
+					<target>${maven.compiler.target}</target>\n\
+					<encoding>Cp1252</encoding>\n\
+				</configuration>\n\
+			</plugin>\n\
+			<plugin>\n\
+				<artifactId>maven-resources-plugin</artifactId>\n\
+				<version>2.6</version>\n\
+				<executions>\n\
+					<execution>\n\
+						<id>copy-resources-config</id>\n\
+						<phase>prepare-package</phase>\n\
+						<goals>\n\
+							<goal>copy-resources</goal>\n\
+						</goals>\n\
+						<configuration>\n\
+							<outputDirectory>${project.build.directory}/config</outputDirectory>\n\
+							<resources>\n\
+								<resource>\n\
+								<directory>src/main/resources/config</directory>\n\
+								<filtering>false</filtering>\n\
+								</resource>\n\
+							</resources>\n\
+						</configuration>\n\
+					</execution>\n\
+				</executions>\n\
+			</plugin>\n\
+			<plugin>\n\
+				<groupId>org.apache.maven.plugins</groupId>\n\
+				<artifactId>maven-dependency-plugin</artifactId>\n\
+				<version>2.4</version>\n\
+				<executions>\n\
+				<execution>\n\
+					<id>copy</id>\n\
+					<phase>package</phase>\n\
+					<goals>\n\
+					<goal>copy-dependencies</goal>\n\
+					</goals>\n\
+					<configuration>\n\
+					<outputDirectory>\n\
+						${project.build.directory}/lib\n\
+					</outputDirectory>\n\
+					</configuration>\n\
+				</execution>\n\
+				</executions>\n\
+			</plugin>\n\
+			<plugin>\n\
+				<groupId>org.apache.maven.plugins</groupId>\n\
+				<artifactId>maven-jar-plugin</artifactId>\n\
+				<version>2.4</version>\n\
+				<configuration>\n\
+				<archive>\n\
+					<manifest>\n\
+					<addClasspath>true</addClasspath>\n\
+					<classpathPrefix>lib/</classpathPrefix>\n\
+					<mainClass>${project.main.class}</mainClass>\n\
+					</manifest>\n\
+					<manifestEntries>\n\
+					<Implementation-Version>${maven.build.timestamp}</Implementation-Version>\n\
+					</manifestEntries>\n\
+				</archive>\n\
+				</configuration>\n\
+			</plugin>\n\
+		</plugins>\n\
+	</build>\n\
+</project>\n\
+\n\
+' > meta-fair/metafair/pom.xml
+
+RUN cd meta-fair/metafair && mvn -Dmaven.test.skip=true clean package
+
+########################################
+
+FROM adoptopenjdk/openjdk11:alpine-jre
+
+COPY --from=mvn_builder meta-fair/metafair/target /root
+
+RUN mkdir -p /app/src/resources/downloaded_ontologies/
+
+EXPOSE 25333
+WORKDIR /root
+
+CMD [ "java", "-jar", "-Xms5g", "-Xmx15g", "/root/metafair-1.0-SNAPSHOT.jar" ]

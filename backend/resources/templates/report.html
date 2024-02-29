@@ -1,0 +1,176 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <meta name="description" content="Report example">
+  </head>
+
+  <body>
+    <article id="cover">
+      <h1>Semantic Artefact Evaluation Report</h1>
+      
+
+      <address>
+        IRT SYSTEMX
+        Centre d'intégration Nano-INNOV
+        Bâtiment 863
+        2, Boulevard Thomas Gobert
+        91120 PALAISEAU
+      </address>
+      <address>
+        contact@irt-systemx.fr
+        https://www.irt-systemx.fr
+        ______________________________
+        Report Creation Date: {{ context["creation_date"]  }}
+        © FAIR explore
+      </address>
+      
+    </article>
+
+    <article id="contents">
+      <h2>Table of contents</h2>
+      <h3>Part one</h3>
+      <ul>
+        <li><a href="#typography-title"></a></li>
+        <li><a href="#skills-title"></a></li>
+      </ul>
+
+      <h3>Part two</h3>
+      <ul>
+        <li><a href="#offers-title"></a></li>
+        <li><a href="#metadata-title"></a></li>  
+        <li><a href="#landscape-title"></a></li> 
+      </ul>
+    </article>
+
+   
+    <article id="typography">
+        <h2 id="typography-title" class="title">My FAIR analysis summary</h2>
+        {% for key, value in context["semantic_artefact_source"].items() %}
+        <section id="ligatures" class="flex-container">
+          {% if "file" in key.lower() %}
+              <img width="64" height="64" src="https://img.icons8.com/plasticine/64/file.png" alt="file" style="margin-left: 3px;"/>
+            {% elif "url" in key.lower() %}
+              <img width="64" height="64" src="https://img.icons8.com/plasticine/64/domain.png" alt="domain"/>
+            {% elif "portal" in key.lower() %}
+              <img width="64" height="64" src="https://img.icons8.com/stickers/64/web.png" alt="web"/>
+            {% endif %}
+          <h4 class="title">{{ key|replace("_", " ")|capitalize }}</h4>
+          {% if value != "None" %}
+            {% if value != "" %}
+              <dl>
+                {% if value is mapping %}
+                  {% if value|length > 0 %}
+                    {% for inner_key, inner_value in value.items() %}
+                      <dt>{{ inner_key|capitalize }}</dt>
+                      <dd>
+                        <span class="none">{{ inner_value }}</span>
+                      </dd>
+                    {% endfor %}
+                  {% else %}
+                    <dt>None</dt>
+                  {% endif %}
+                {% else %}
+                  <dt>{{ value }}</dt>
+                {% endif %}
+              </dl>
+            {% else %}
+              <p>None</p>
+            {% endif %}
+          {% else %}
+            <p>None</p>
+          {% endif %}
+        </section>
+        {% endfor %}
+
+    </article>
+
+  
+    <article id="skills">
+      <h2 id="skills-title">Key information of my semantic artefact</h2>
+
+      {% for item in context["summary_of_extracted_metadata"] %}
+      <section id="table-content">
+        {% for key, value in item.items() %}
+        <div class="icon-title-container">
+          {% if "acronym" in key.lower() or "title" in key.lower() %}
+            <img width="64" height="64" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-dictionary-literature-flaticons-lineal-color-flat-icons-2.png" alt="external-dictionary-literature-flaticons-lineal-color-flat-icons-2" />
+          {% elif "domain" in key.lower() %}
+            <img width="64" height="64" src="https://img.icons8.com/dusk/64/test-tube.png" alt="test-tube"/>
+          {% elif "version" in key.lower() %}
+          <img width="64" height="64" src="https://img.icons8.com/dusk/64/code-fork.png" alt="code-fork"/>
+          {% elif "creat" in key.lower() %}
+          <img width="64" height="64" src="https://img.icons8.com/dusk/64/pencil--v2.png" alt="pencil--v2"/>
+          {% endif %}
+          <h4 class="title">{{ key|upper }} : </h4>
+          <p> {{ value }}</p>
+        </div>
+ 
+        {% endfor %}
+      </section>
+    {% endfor %}
+
+    </article>
+
+    <article id="offers">
+      <h2 id="offers-title">FAIR reviews of my semantic artefact</h2>
+
+      {% for key in context["semantic_artefact_evaluation"].keys() %}
+      <section>
+        <h4>{{ key|upper }}</h4>
+        {% if context["semantic_artefact_evaluation"][key] is not none and 'overallScore' in context["semantic_artefact_evaluation"][key] %}
+          <p>{{ context["semantic_artefact_evaluation"][key].overallScore|float|round(2) }}</p>
+        {% else %}
+          <p>N/A</p>
+        {% endif %}
+      </section>
+    {% endfor %}
+    
+    </article>
+
+    <article id="metadata">
+      <h2 id="metadata-title">Tracked FAIR metadata from my semantic artefact </h2>
+      
+      <!-- Specify the order of the keys for the charts -->
+      {% set chart_order = ['minimal_chart', 'recommended_chart', 'extended_chart'] %}
+      
+      <!-- Loop through the charts based on the custom order -->
+      {% for key in chart_order %}
+      <section>
+        {% if context["metadata_percentages"] %}
+          {% if key == 'minimal_chart' %}
+          <h4>MANDATORY CHART : {{ context["metadata_percentages"][key] }} % of metadata are present</h4>
+
+          {% elif key == 'extended_chart' %}
+          <h4>OPTIONAL CHART : {{ context["metadata_percentages"][key] }} % of metadata are present</h4>
+          {% else %}
+          <h4>{{ key|replace("_", " ")|capitalize }} : {{ context["metadata_percentages"][key] }} % of metadata are present</h4>
+          {% endif %}
+        {% endif %}
+        <img src="{{ url_for('static', filename=context["metadata_charts"][key]) }}">
+      </section>
+      {% endfor %}
+      
+    </article>
+
+    <article id="landscape">
+
+      <h2 id="landscape-title">FAIR landscape analysis of semantic artefacts</h2>
+      
+      <!-- Specify the order of the keys for the charts -->
+      {% set chart_order = ['ofaire_chart', 'foops_chart', 'fairchecker_chart'] %}
+      
+      <!-- Loop through the charts based on the custom order -->
+      {% for key in chart_order %}
+      <section>
+        {% if context["landscape_charts"] %}
+          <h4>{{ key|replace("_", " ")|capitalize }} </h4>
+        {% endif %}
+        <img src="{{ url_for('static', filename=context["landscape_charts"][key]) }}">
+      </section>
+      {% endfor %}
+    </article>
+    
+
+  </body>
+</html>

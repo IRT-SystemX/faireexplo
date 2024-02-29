@@ -1,0 +1,211 @@
+[
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/abstract",
+       "metadataMappings": null
+   },
+   {
+       "@id": "http://data.bioontology.org/submission_metadata/status",
+       "metadataMappings": [
+           {
+               "label": "adms:status",
+               "label_uri": "https://www.w3.org/TR/vocab-adms/#adms-status"
+           },
+           {
+               "label": "idot:state",
+               "label_uri": "https://identifiers.org/idot:state"
+           }
+       ]
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/usedOntologyEngineeringTool",
+       "metadataMappings": [
+           {
+               "label": "mod:toolUsed",
+               "label_uri": "http://www.isibang.ac.in/ns/mod/1.1/toolUsed"
+           },
+           {
+               "label": "pav:createdWith",
+               "label_uri": "http://purl.org/pav/createdWith"
+           },
+           {
+               "label": "oboInOwl:auto-generated-by",
+               "label_uri": "http://www.geneontology.org/formats/oboInOwl#auto-generated-by"
+           }
+       ]
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/ontologyRelatedTo",
+       "metadataMappings": [
+           {
+               "label": "dc:relation",
+               "label_uri": ""
+           },
+           {
+               "label": "dct:relation",
+               "label_uri": "http://purl.org/dc/elements/1.1/relation"
+           },
+           {
+               "label": "voaf:reliesOn",
+               "label_uri": ""
+           }
+       ]
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/accrualPolicy",
+       "metadataMappings": null
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/includedInDataCatalog",
+       "metadataMappings": null
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/competencyQuestion",
+       "metadataMappings": null
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/accrualPeriodicity",
+       "metadataMappings": [
+           {
+               "label": "nkos:updateFrequency",
+               "label_uri": null
+           }
+       ]
+   },
+   {
+       "@id": "http://data.bioontology.org/submission_metadata/coverage",
+       "metadataMappings": [
+           {
+               "label": "dc:coverage",
+               "label_uri": ""
+           },
+           {
+               "label": "schema:spatial",
+               "label_uri": "http://schema.org/spatial"
+           }
+       ]
+   },
+   {
+       "@id": "http://data.bioontology.org/submission_metadata/wasGeneratedBy",
+       "metadataMappings": null
+   },
+   {
+       "@id": "http://data.bioontology.org/submission_metadata/isBackwardCompatibleWith",
+       "metadataMappings": [
+           {
+               "label": "owl:backwardCompatibleWith",
+               "label_uri": "http://www.w3.org/2002/07/owl#BackwardCompatibleWith"
+           },
+           {
+               "label": "door:backwardCompatibleWith",
+               "label_uri": "http://kannel.open.ac.uk/ontology#backwardCompatibleWith"
+           }
+       ]
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/isIncompatibleWith",
+       "metadataMappings": [
+           {
+               "label": "owl:incompatibleWith",
+               "label_uri": "http://www.w3.org/2002/07/owl#IncompatibleWith"
+           },
+           {
+               "label": "door:owlIncompatibleWith",
+               "label_uri": "http://kannel.open.ac.uk/ontology#owlIncompatibleWith"
+           }
+       ]
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/modificationDate",
+       "metadataMappings": [
+           {
+               "label": "dct:modified",
+               "label_uri": null
+           },
+           {
+               "label": "schema:dateModified",
+               "label_uri": "http://schema.org/dateModified"
+           },
+           {
+               "label": "pav:lastUpdateOn",
+               "label_uri": "http://purl.org/pav/"
+           },
+           {
+               "label": "mod:updated",
+               "label_uri": "http://omv.ontoware.org/2005/05/ontology#modificationDate"
+           }
+       ]
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/source",
+       "metadataMappings": [
+           {
+               "label": "dc:source",
+               "label_uri": "http://purl.org/dc/elements/1.1/source"
+           },
+           {
+               "label": "prov:wasInfluencedBy",
+               "label_uri": "http://www.w3.org/ns/prov#wasInfluencedBy"
+           },
+           {
+               "label": "prov:wasDerivedFrom",
+               "label_uri": "http://www.w3.org/ns/prov#wasDerivedFrom"
+           },
+           {
+               "label": "pav:derivedFrom",
+               "label_uri": "http://purl.org/pav/"
+           },
+           {
+               "label": "schema:isBasedOn",
+               "label_uri": "http://schema.org/isBasedOn"
+           },
+           {
+               "label": "nkos:basedOn",
+               "label_uri": "http://w3id.org/nkos#"
+           },
+           {
+               "label": "mod:sourceOntology",
+               "label_uri": null
+           }
+       ]
+   },
+   {
+       "@id": "http://data.bioontology.org/submission_metadata/publisher",
+       "metadataMappings": [
+           {
+               "label": "dc:publisher",
+               "label_uri": null
+           },
+           {
+               "label": "adms:schemaAgency",
+               "label_uri": "http://www.w3.org/ns/adms#schemaAgency"
+           },
+           {
+               "label": "schema:publisher",
+               "label_uri": "http://schema.org/publisher"
+           }
+       ]
+   },
+   {
+       "@id": "http://data.bioontology.org/submission_metadata/logo",
+       "metadataMappings": [
+           {
+               "label": "schema:logo",
+               "label_uri": "http://schema.org/logo"
+           }
+       ]
+   },
+    {
+       "@id": "http://data.bioontology.org/submission_metadata/depiction",
+       "metadataMappings": [
+           {
+               "label": "doap:screenshots",
+               "label_uri": "http://usefulinc.com/ns/doap#screenshots"
+           },
+           {
+               "label": "schema:image",
+               "label_uri": "http://schema.org/image"
+           }
+       ]
+   }
+
+]

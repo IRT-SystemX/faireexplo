@@ -1,0 +1,40 @@
+[
+    {
+        "@id": "http://data.bioontology.org/submission_metadata/hasPriorVersion",
+        "metadataMappings": [
+            {
+                "label": "owl:priorVersion",
+                "label_uri": ""
+            },
+            {
+                "label": "dct:isVersionOf",
+                "label_uri": "http://purl.org/dc/terms/isVersionOf"
+            },
+            {
+                "label": "door:priorVersion",
+                "label_uri": "http://kannel.open.ac.uk/ontology#priorVersion"
+            },
+            {
+                "label": "prov:wasRevisionOf",
+                "label_uri": "https://www.w3.org/ns/prov#wasRevisionOf"
+            },
+            {
+                "label": "adms:prev",
+                "label_uri": "http://www.w3.org/ns/adms#prev"
+            },
+            {
+                "label": "pav:previousVersion",
+                "label_uri": ""
+            },
+            {
+                "label": "pav:hasEarlierVersion",
+                "label_uri": ""
+            },
+            {
+                "label": "owl:PriorVersion",
+                "label_uri": "http://www.w3.org/2002/07/owl#PriorVersion"
+            }
+        ]
+    }
+    
+]

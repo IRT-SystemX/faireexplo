@@ -1,0 +1,31 @@
+[
+    {
+        "@id": "http://data.bioontology.org/submission_metadata/URI",
+        "metadataMappings": null
+    }, 
+     {
+        "@id": "http://data.bioontology.org/submission_metadata/identifier",
+        "metadataMappings": [
+            {
+                "label": "dc:identifier",
+                "label_uri": "http://purl.org/dc/elements/1.1/identifier"
+            },
+            {
+                "label": "skos:notation",
+                "label_uri": "https://www.w3.org/2009/08/skos-reference/skos.html#notation"
+            },
+            {
+                "label": "adms:identifier",
+                "label_uri": "https://www.w3.org/TR/vocab-adms/#adms-identifier"
+            },
+            {
+                "label": "schema:identifier",
+                "label_uri": "https://schema.org/identifier"
+            }
+        ]
+    },
+     {
+        "@id": "http://data.bioontology.org/submission_metadata/versionIRI",
+        "metadataMappings": null
+    }
+]

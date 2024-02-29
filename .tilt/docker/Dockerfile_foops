@@ -1,0 +1,16 @@
+FROM maven:3.8.1-openjdk-11 as mvn_builder
+
+RUN git clone https://github.com/oeg-upm/fair_ontologies
+
+RUN cd fair_ontologies && mvn clean package
+
+########################################
+
+FROM adoptopenjdk/openjdk11:alpine-jre
+
+COPY --from=mvn_builder fair_ontologies/target /root
+
+EXPOSE 8083
+WORKDIR /root
+
+CMD [ "java", "-Dserver.port=8083", "-jar", "-Xms5g", "-Xmx15g", "/root/fair_ontologies-0.1.0.jar" ]

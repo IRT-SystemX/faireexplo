@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fair-frontend
+  namespace: fair
+  labels:
+    app.kubernetes.io/name: fair-frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fair-frontend-pod
+      
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: fair-frontend-pod
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: front
+        image: fair-frontend
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fair-frontend-service
+  namespace: fair
+spec:
+  selector:
+    app.kubernetes.io/name: fair-frontend-pod
+  type: LoadBalancer
+  ports:
+    - name: port8000
+      protocol: TCP
+      port: 8000
+      targetPort: 8000
